@@ -1,0 +1,57 @@
+{
+  "name": "jungicons",
+  "version": "1.0.0",
+  "description": "",
+  "main": "react/index.js",
+  "files": [
+    "react/",
+    "ui/"
+  ],
+  "scripts": {
+    "clean": "rimraf outline solid react src package jungicons.tgz",
+    "export": "figma-export use-config figma.config.js",
+    "test": "node test.js",
+    "bundle": "rollup --config",
+    "build": "run-s clean export bundle",
+    "np": "np",
+    "release": "run-s build np"
+  },
+  "author": "",
+  "license": "MIT",
+  "homepage": "https://github.com/vnhtpvn0505/jung-icon#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vnhtpvn0505/jung-icon.git.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vnhtpvn0505/jung-icon.git/issues"
+  },
+  "keywords": [
+    "icons",
+    "svg",
+    "react"
+  ],
+  "devDependencies": {
+    "@figma-export/cli": "^4.5.0",
+    "@figma-export/output-components-as-svg": "^4.5.0",
+    "@figma-export/output-components-as-svgr": "^4.5.0",
+    "@figma-export/transform-svg-with-svgo": "^4.5.0",
+    "@rollup/plugin-typescript": "^11.0.0",
+    "@types/react": "^18.0.27",
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.0.3",
+    "npm-run-all": "^4.1.5",
+    "react": "^18.2.0",
+    "rimraf": "^4.1.2",
+    "rollup": "^3.12.1",
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.5"
+  },
+  "peerDependencies": {
+    "react": ">= 16"
+  },
+  "dependencies": {
+    "@expo/styleguide": "^6.1.3",
+    "tailwind-merge": "^1.9.0"
+  }
+}
