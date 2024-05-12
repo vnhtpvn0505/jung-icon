@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('path');
 
 const svgo = require('@figma-export/transform-svg-with-svgo');
 const template = require('./svgr-icon-template');
@@ -7,14 +8,18 @@ const capitalize = (s) => {
   return s.split('-').map((s) => s.charAt(0).toUpperCase() + s.slice(1)).join('');
 };
 const outputters = [
-  require('@figma-export/output-components-as-svg')({ output: './svg' }),
+  require('@figma-export/output-components-as-svg')({
+    output: './svg',
+    getDirname: (options) => `${options.pageName}${path.sep}${options.dirname}`,
+    getBasename: (options) => `${options.basename}.svg`,
+
+    }),
   require('@figma-export/output-components-as-svgr')({
     getFileExtension: () => '.tsx',
     getComponentName: ({ componentName, pageName }) => {
       if (pageName === 'outline') {
         return capitalize(componentName) + 'Icon';
       }
-
       return capitalize(componentName) + capitalize(pageName) + 'Icon';
     },
     getSvgrConfig: () => ({
@@ -37,12 +42,15 @@ const outputters = [
 const solidSVGOConfig = [
   {
     name: 'removeDimensions',
-    active: true
+    active: false
   },
   {
     name: 'sortAttrs',
-    active: true,
+    params: {
+      stroke: "currentColor"
+    }
   },
+  { name: 'reusePaths', active: true },
   {
     name: 'removeAttrs',
     params: {
@@ -53,7 +61,8 @@ const solidSVGOConfig = [
     name: 'addAttributesToSVGElement',
     params: {
       attribute: {
-        fill: "currentColor"
+        fill: "currentColor",
+        stroke: "currentColor"
       }
     }
   }
@@ -66,14 +75,17 @@ const outlineSVGOConfig = [
     active: true,
   },
   {
-    name: 'sortAttrs',
-    active: true,
+    name: "convertStyleToAttrs",
+    params: {
+      keepImportant: false
+    }
   },
   {
-    name: 'removeAttrs',
+    name: "sortAttrs",
     params: {
-      attrs: 'stroke',
-    },
+      order: ["id","width","height","x","x1","x2","y","y1","y2","cx","cy","r","fill","stroke","marker","d","points"],
+      xmlnsOrder: "front"
+    }
   },
   {
     name: 'addAttributesToSVGElement',

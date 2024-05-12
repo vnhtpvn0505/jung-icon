@@ -1,5 +1,4 @@
 import typescript from '@rollup/plugin-typescript';
-
 const config = [
   {
     input: 'index.js',
@@ -8,7 +7,7 @@ const config = [
       format: 'module',
     },
     plugins: [typescript()],
-    external: ['react']
+    external: ['react','tailwind-merge']
   },
 ];
 
